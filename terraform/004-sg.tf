@@ -65,3 +65,52 @@ resource "aws_security_group_rule" "ecs_all_out" {
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.ecs_cluster_sg.id
 }
+
+#######################################
+# ALB SECURITY GROUP
+#######################################
+resource "aws_security_group" "alb_sg" {
+  name        = "${var.project_name}-alb-sg"
+  description = "Security group for ALB"
+  vpc_id      = aws_vpc.ecs_vpc.id
+
+  tags = {
+    Name = "${var.project_name}-alb-sg"
+  }
+}
+
+#######################################
+# INGRESS RULES FOR ALB
+#######################################
+resource "aws_security_group_rule" "alb_http_in" {
+  description       = "Allow HTTP from anywhere to ALB"
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.alb_sg.id
+}
+
+resource "aws_security_group_rule" "alb_https_in" {
+  description       = "Allow HTTPS from anywhere to ALB"
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.alb_sg.id
+}
+
+#######################################
+# EGRESS RULE FOR ALB
+#######################################
+resource "aws_security_group_rule" "alb_all_out" {
+  description       = "Allow all outbound traffic from ALB"
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.alb_sg.id
+}

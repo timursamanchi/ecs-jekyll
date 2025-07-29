@@ -16,14 +16,25 @@ resource "aws_ecs_service" "quote_frontend_service" {
   deployment_maximum_percent         = 200
 
   network_configuration {
-    subnets          = [for s in aws_subnet.public : s.id]
+
+  # subnets          = [for s in aws_subnet.public : s.id] uncommed if assign public IP and moving to public subnet are required 
+    subnets          = [for s in aws_subnet.private : s.id]
     security_groups  = [aws_security_group.ecs_cluster_sg.id]
-    assign_public_ip = true
+
+    # set to true to assign a public IP address
+    assign_public_ip = false 
   }
 
     service_registries {
     registry_arn = aws_service_discovery_service.quote_backend_sd.arn
   }
+
+  load_balancer {
+    target_group_arn = aws_lb_target_group.frontend_tg.arn
+    container_name   = "${var.project_name}-frontend-app" # ✅ now matches task definition
+    container_port   = 80
+  }
+
 
   propagate_tags = "TASK_DEFINITION"
 
@@ -57,6 +68,8 @@ resource "aws_ecs_service" "quote_backend_service" {
   network_configuration {
     subnets          = [for s in aws_subnet.private : s.id]
     security_groups  = [aws_security_group.ecs_cluster_sg.id]
+
+    # set to true to assign a public IP address
     assign_public_ip = false
   }
 
