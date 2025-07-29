@@ -1,8 +1,7 @@
 {
-  "name": "quote-backend",
+  "name": "${container_name}",
   "image": "040929397520.dkr.ecr.eu-west-2.amazonaws.com/quote-backend:v02",
   "essential": true,
-
   "portMappings": [
     {
       "containerPort": 8080,
@@ -10,19 +9,9 @@
       "protocol": "tcp"
     }
   ],
-  "healthCheck": {
-    "command": [
-      "CMD-SHELL",
-      "curl -f http://localhost:8080/health || exit 1"
-    ],
-    "interval": 30,
-    "timeout": 5,
-    "retries": 3,
-    "startPeriod": 10
-  },
-
   "logConfiguration": {
-    "logDriver": "awslogs",
+    "logDriver": "awslogs"
+    ,
     "options": {
       "awslogs-group": "/ecs/quote-backend",
       "awslogs-region": "eu-west-2",

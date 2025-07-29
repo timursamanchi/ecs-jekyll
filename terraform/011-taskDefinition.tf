@@ -12,8 +12,8 @@ resource "aws_ecs_task_definition" "quoteApp_task" {
   task_role_arn      = aws_iam_role.ecs_task_role.arn
 
   container_definitions = jsonencode([
-    jsondecode(file("${path.module}/../json/quote-backend.json")),
-    jsondecode(file("${path.module}/../json/quote-frontend.json"))
+    jsondecode(templatefile("${path.module}/../json/quote-backend.json.tpl", { container_name = "${var.project_name}-backend-app" })),
+    jsondecode(templatefile("${path.module}/../json/quote-frontend.json.tpl", { container_name = "${var.project_name}-frontend-app" }))
   ])
 
   depends_on = [

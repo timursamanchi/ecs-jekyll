@@ -9,23 +9,23 @@ resource "aws_ecs_service" "quote_frontend_service" {
   launch_type         = "FARGATE"
   scheduling_strategy = "REPLICA"
 
-  enable_execute_command     = true
-  force_new_deployment       = true
+  enable_execute_command = true
+  force_new_deployment   = true
 
   deployment_minimum_healthy_percent = 100
   deployment_maximum_percent         = 200
 
   network_configuration {
 
-  # subnets          = [for s in aws_subnet.public : s.id] uncommed if assign public IP and moving to public subnet are required 
-    subnets          = [for s in aws_subnet.private : s.id]
-    security_groups  = [aws_security_group.ecs_cluster_sg.id]
+    # subnets          = [for s in aws_subnet.public : s.id] uncommed if assign public IP and moving to public subnet are required 
+    subnets         = [for s in aws_subnet.private : s.id]
+    security_groups = [aws_security_group.ecs_cluster_sg.id]
 
     # set to true to assign a public IP address
-    assign_public_ip = false 
+    assign_public_ip = false
   }
 
-    service_registries {
+  service_registries {
     registry_arn = aws_service_discovery_service.quote_backend_sd.arn
   }
 
@@ -58,15 +58,15 @@ resource "aws_ecs_service" "quote_backend_service" {
   launch_type         = "FARGATE"
   scheduling_strategy = "REPLICA"
 
-  enable_execute_command     = true
-  force_new_deployment       = true
+  enable_execute_command = true
+  force_new_deployment   = true
 
   deployment_minimum_healthy_percent = 100
   deployment_maximum_percent         = 200
 
   network_configuration {
-    subnets          = [for s in aws_subnet.private : s.id]
-    security_groups  = [aws_security_group.ecs_cluster_sg.id]
+    subnets         = [for s in aws_subnet.private : s.id]
+    security_groups = [aws_security_group.ecs_cluster_sg.id]
 
     # set to true to assign a public IP address
     assign_public_ip = false

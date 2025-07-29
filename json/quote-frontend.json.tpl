@@ -1,15 +1,13 @@
 {
-  "name": "quote-frontend",
+  "name": "${container_name}",
   "image": "040929397520.dkr.ecr.eu-west-2.amazonaws.com/quote-frontend:v02",
   "essential": true,
-
   "portMappings": [
     {
       "containerPort": 80,
       "protocol": "tcp"
     }
   ],
-
   "logConfiguration": {
     "logDriver": "awslogs",
     "options": {
@@ -18,7 +16,6 @@
       "awslogs-stream-prefix": "ecs"
     }
   },
-
   "environment": [
     {
       "name": "QUOTE_API_URL",
