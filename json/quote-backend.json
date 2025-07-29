@@ -1,0 +1,22 @@
+{
+  "name": "quote-backend",
+  "image": "040929397520.dkr.ecr.eu-west-2.amazonaws.com/quote-backend:v02",
+  "essential": true,
+
+  "portMappings": [
+    {
+      "containerPort": 8080,
+      "hostPort": 8080,
+      "protocol": "tcp"
+    }
+  ],
+
+  "logConfiguration": {
+    "logDriver": "awslogs",
+    "options": {
+      "awslogs-group": "/ecs/quote-backend",
+      "awslogs-region": "eu-west-2",
+      "awslogs-stream-prefix": "ecs"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome</title>
+</head>
+<body>
+    <h1>Hello All - from Timur's project: AWS ECS cluster - NEW HORIZON!</h1>
+    <h2>Quote of the day: <span id="quote">Loading...</span></h2>
+    <p><strong>Loaded at:</strong> <span id="timestamp">Loading...</span></p>
+
+    <script>
+      fetch('/quote')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('quote').innerText = data.quote;
+          const now = new Date();
+          document.getElementById('timestamp').innerText = now.toLocaleString();
+        })
+        .catch(err => {
+          document.getElementById('quote').innerText = 'Error loading quote';
+          document.getElementById('timestamp').innerText = new Date().toLocaleString();
+        });
+    </script>
+    
+</body>
+</html>
