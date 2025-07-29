@@ -35,7 +35,6 @@ resource "aws_ecs_service" "quote_frontend_service" {
     container_port   = 80
   }
 
-
   propagate_tags = "TASK_DEFINITION"
 
   tags = {
