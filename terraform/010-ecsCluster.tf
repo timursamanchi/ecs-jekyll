@@ -4,7 +4,7 @@
 #######################################
 
 resource "aws_ecs_cluster" "ecs_cluster" {
-  name = "${var.project_name}-ecsCluster"
+  name = "${var.project_name}-c01"
 
   setting {
     name  = "containerInsights"
@@ -12,7 +12,7 @@ resource "aws_ecs_cluster" "ecs_cluster" {
   }
 
   tags = {
-    Name = "${var.project_name}-ecsCluster"
+    Name = "${var.project_name}-c01"
   }
 }
 #######################################
