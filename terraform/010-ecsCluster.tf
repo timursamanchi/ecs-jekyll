@@ -4,7 +4,7 @@
 #######################################
 
 resource "aws_ecs_cluster" "ecs_cluster" {
-  name = "${var.project_name}-ecsCluster"
+  name = "${var.project_name}"
 
   setting {
     name  = "containerInsights"

@@ -6,7 +6,7 @@ resource "aws_lb" "frontend_alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.ecs_cluster_sg.id]
-  subnets            = [for s in aws_subnet.public : s.id] # <-- Ensure you have public subnets!
+  subnets            = [for subnet in aws_subnet.public : subnet.id] # <-- Ensure you have public subnets!
 
   enable_deletion_protection = false
 
@@ -16,7 +16,7 @@ resource "aws_lb" "frontend_alb" {
 }
 
 #######################################
-# Target Group for ALB
+# Target Group for ALB frontend
 #######################################
 resource "aws_lb_target_group" "frontend_tg" {
   name        = "${var.project_name}-tg"
@@ -41,7 +41,7 @@ resource "aws_lb_target_group" "frontend_tg" {
 }
 
 #######################################
-# ALB Listener for HTTP
+# ALB frontend listener for HTTP
 #######################################
 resource "aws_lb_listener" "frontend_http_listener" {
   load_balancer_arn = aws_lb.frontend_alb.arn
