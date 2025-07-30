@@ -4,7 +4,7 @@
 #######################################
 
 resource "aws_ecs_cluster" "ecs_cluster" {
-  name = "${var.project_name}-ecsCluster"
+  name = "${var.project_name}-c01"
 
   setting {
     name  = "containerInsights"
@@ -12,7 +12,7 @@ resource "aws_ecs_cluster" "ecs_cluster" {
   }
 
   tags = {
-    Name = "${var.project_name}-ecsCluster"
+    Name = "${var.project_name}-c01"
   }
 }
 #######################################
@@ -49,23 +49,23 @@ resource "aws_service_discovery_service" "quote_backend_sd" {
   }
 }
 
-resource "aws_service_discovery_service" "quote_frontend_sd" {
-  name = "quote-frontend"
+# resource "aws_service_discovery_service" "quote_frontend_sd" {
+#   name = "quote-frontend"
 
-  dns_config {
-    namespace_id = aws_service_discovery_private_dns_namespace.quote_namespace.id
-    dns_records {
-      type = "A"
-      ttl  = 30
-    }
-    routing_policy = "MULTIVALUE"
-  }
+#   dns_config {
+#     namespace_id = aws_service_discovery_private_dns_namespace.quote_namespace.id
+#     dns_records {
+#       type = "A"
+#       ttl  = 30
+#     }
+#     routing_policy = "MULTIVALUE"
+#   }
 
-  health_check_custom_config {
-    failure_threshold = 1
-  }
+#   health_check_custom_config {
+#     failure_threshold = 1
+#   }
 
-  tags = {
-    Name = "${var.project_name}-frontend-sd"
-  }
-}
+#   tags = {
+#     Name = "${var.project_name}-frontend-sd"
+#   }
+# }

@@ -1,6 +1,6 @@
 {
   "name": "quote-frontend",
-  "image": "040929397520.dkr.ecr.eu-west-2.amazonaws.com/quote-frontend:v02",
+  "image": "040929397520.dkr.ecr.eu-west-2.amazonaws.com/quote-frontend:v05",
   "essential": true,
 
   "portMappings": [
@@ -17,12 +17,5 @@
       "awslogs-region": "eu-west-2",
       "awslogs-stream-prefix": "ecs"
     }
-  },
-
-  "environment": [
-    {
-      "name": "QUOTE_API_URL",
-      "value": "http://quote-backend.internal.local:8080/"
-    }
-  ]
+  }
 }
